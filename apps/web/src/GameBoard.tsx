@@ -404,7 +404,7 @@ function GameBoard(props: GameBoardProps) {
         <section className={`kj-center ${scales.arrangement}`} ref={centerRef}>
           <div className={canAct ? "kj-prompt mine" : "kj-prompt"} role="status" data-tutorial="prompt">
             <span>{prompt}</span>
-            {autoPlaying && playing && <button className="quiet-button" type="button" onClick={() => onAuto(false)}>取消托管</button>}
+            {autoPlaying && playing && <button className="quiet-button kj-auto-cancel" type="button" onClick={() => onAuto(false)} data-tutorial="auto-cancel">取消托管</button>}
             {(error || shownNotice) && <em className={error ? "kj-feedback error" : "kj-feedback"} role={error ? "alert" : "status"}>{error || shownNotice}</em>}
           </div>
           {mobile && !spectating && playersPanel("me")}

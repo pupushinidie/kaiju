@@ -10,6 +10,7 @@ import ReactDOM from "react-dom/client";
 import { scene, SCENE_NAMES, type GameState, type LobbyMember, type LobbyRoomSnapshot, type SceneName } from "@kaiju/game";
 import GameBoard from "./GameBoard.js";
 import RoomChat from "./RoomChat.js";
+import { useConfirm } from "./confirm.js";
 import { NO_BGM, SoundToggle, useBgm } from "./gm-sound.js";
 import { applyTheme, ThemeToggle, useTheme } from "./theme.js";
 import { useVoice } from "./voice.js";
@@ -63,13 +64,14 @@ function Preview() {
   const [theme, toggleTheme] = useTheme();
   const voice = useVoice(null);
   useBgm(NO_BGM);
+  const [confirmAction, confirmDialog] = useConfirm();
   void setRoom;
   return (
     <main className="app-shell kj-game" data-gc-table>
       <GameBoard
         room={room}
         busy={false}
-        error=""
+        error={params.has("err") ? "能量不够。" : ""}
         notice=""
         brand={<a className="brand" href="#"><span className="brand-name">巨兽之城</span></a>}
         connection={<div className="connection-status online"><span className="connection-dot" />服务已连接</div>}
@@ -78,12 +80,13 @@ function Preview() {
         onCommand={(command) => console.log("command", command)}
         onRematch={() => undefined}
         onAuto={() => undefined}
-        onDissolve={() => undefined}
+        onDissolve={() => void confirmAction({ title: "解散房间？", detail: "所有玩家都会被移出，当前对局也会结束。", confirmLabel: "解散" })}
         watchId="p1"
         onWatch={() => undefined}
         onLeave={() => undefined}
         {...(self ? { selfOverride: self } : {})}
       />
+      {confirmDialog}
       <nav className="preview-nav" style={{ position: "fixed", left: 4, bottom: 4, zIndex: 2000, display: params.has("nav") ? "flex" : "none", flexWrap: "wrap", gap: 4, maxWidth: 600 }}>
         {[...SCENE_NAMES, ...EXTRA].map((entry) => <a key={entry} href={`?s=${entry}&nav`} style={{ color: "#fff", background: "#000", padding: "0 4px", fontSize: 12 }}>{entry}</a>)}
       </nav>

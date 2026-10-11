@@ -61,7 +61,7 @@
 
 /* 顶栏里的规则说明和房间菜单：下拉，不撑开顶栏 */
 .kj-topbar .game-rules { position: relative; margin: 0; }
-.kj-topbar .game-rules-panel { position: absolute; z-index: 60; right: 0; top: calc(100% + 8px); width: min(560px, calc(100vw - 24px)); max-height: calc(100dvh - 80px); overflow: auto; display: block; margin: 0; }
+.kj-topbar .game-rules-panel { white-space: normal; text-align: left; position: absolute; z-index: 60; right: 0; top: calc(100% + 8px); width: min(560px, calc(100vw - 24px)); max-height: calc(100dvh - 80px); overflow: auto; display: block; margin: 0; }
 .kj-topbar .game-rules-block + .game-rules-block { margin-top: 12px; }
 .kj-topbar .game-room-popover { z-index: 60; }
 
@@ -392,8 +392,8 @@
   .kj-stats { gap: 6px; }
   .kj-stat small { display: none; }
   .kj-drawer-toggle { display: inline-flex; }
-  .kj-side { position: fixed; z-index: 50; right: 0; top: 52px; bottom: 0; width: min(360px, 100vw); padding: 10px; background: var(--bg); box-shadow: calc(var(--px) * -1) 0 0 0 var(--rim); transform: translateX(105%); visibility: hidden; }
-  .kj-side.open { transform: none; visibility: visible; }
+  .kj-side { position: fixed; z-index: 50; right: 0; top: 52px; bottom: 0; width: min(360px, 100vw); padding: 10px; background: var(--bg); box-shadow: calc(var(--px) * -1) 0 0 0 var(--rim); display: none; }
+  .kj-side.open { display: flex; }
   .kj-topbar .connection-status { display: none; }
 }
 @media (max-width: 1100px) {
@@ -406,7 +406,7 @@
   .app-shell.kj-game { height: auto; min-height: 100dvh; overflow: visible; }
   .kj-screen { height: auto; min-height: 100dvh; grid-template-rows: auto auto; }
   .kj-topbar { position: sticky; top: 0; flex-wrap: wrap; gap: 6px; padding: 4px 8px; }
-  .kj-topbar-right { gap: 4px; }
+  .kj-topbar-right { gap: 4px; flex-wrap: wrap; justify-content: flex-end; white-space: normal; }
   .kj-topbar-right .quiet-button { padding: 4px 6px; }
   .kj-turn { font-size: 12px; }
   .kj-layout { display: flex; flex-direction: column; padding: 8px; }
@@ -420,6 +420,7 @@
   .kj-standings > li { flex-wrap: wrap; }
   .kj-standings strong { flex: 1 1 calc(100% - 90px); }
   .kj-side { top: 0; }
+  .kj-topbar .game-rules-panel, .app-shell.kj-lobby .topbar .game-rules-panel { position: fixed; left: 8px; right: 8px; top: 56px; width: auto; }
   .app-shell .kj-big { font-size: 24px; padding: 6px 10px; }
   .app-shell .kj-detail { flex-direction: column; align-items: center; }
   .kj-banner { font-size: 24px; }
@@ -481,3 +482,9 @@
 @media (max-width: 850px) {
   .app-shell .kj-room-page .player-panel { order: -1; }
 }
+/* 5 种人数一行排开；窄屏只留数字 */
+.app-shell.kj-home .capacity-options { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+.app-shell.kj-home .capacity-option { min-width: 0; padding-left: 2px; padding-right: 2px; }
+.app-shell.kj-home .capacity-option span { white-space: nowrap; }
+@media (max-width: 1100px) { .app-shell.kj-home .capacity-option span { display: none; } }
+@media (max-width: 850px) { .app-shell.kj-home .welcome-grid { grid-template-columns: minmax(0, 1fr); } .app-shell.kj-home .entry-card { min-width: 0; } }

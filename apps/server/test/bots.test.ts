@@ -14,9 +14,13 @@ import {
 } from "@kaiju/game";
 
 // ---------- 每款游戏不一样的地方 ----------
-/** 测试里真人怎么走：从合法动作里挑一个（要保证对局能走完）。欲罢不能：推进完就收手，回合短。 */
-function humanMove(game: GameState, actions: GameCommand[]): GameCommand {
-  return game.stage === "decide" ? { type: "STOP" } : actions[0]!;
+/** 测试里真人怎么走：从合法动作里挑一个（要保证对局能走完）。巨兽之城：掷一次就结算，不买牌，不让位、不用双翼。 */
+function humanMove(_game: GameState, actions: GameCommand[]): GameCommand {
+  const prefer = ["RESOLVE", "END_TURN"];
+  const pick = actions.find((action) => prefer.includes(action.type))
+    ?? actions.find((action) => (action.type === "YIELD" && !action.yield) || (action.type === "WINGS" && !action.use))
+    ?? actions.find((action) => action.type !== "RAPID_HEAL");
+  return pick ?? actions[0]!;
 }
 /** 这位玩家自己做了点什么（不是超时、不是轮到他）。 */
 function actedBy(room: LobbyRoomSnapshot, playerId: string): boolean {

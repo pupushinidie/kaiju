@@ -22,7 +22,7 @@ const HIDDEN_INFO = false;
 /** 开局后先走几步（每步选轮到的人的第一个合法动作），让场上有藏起来的牌。 */
 const STEPS = 4;
 /** 只在服务端的字段（牌堆顺序、种子等），观战的人永远拿不到。 */
-const SERVER_ONLY = ["deck", "seed"];
+const SERVER_ONLY = ["deck", "seed", "rngState", "log", "peek"];
 /** 这份状态里看得到几样藏起来的东西（手牌之类）。 */
 function secretsSeen(_game: GameState): number {
   return 0;

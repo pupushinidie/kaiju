@@ -1,4 +1,4 @@
-import type { GameCommand, GameState } from "./types.js";
+import type { GameCommand, GameState, MonsterId } from "./types.js";
 
 /** 房间人数：2–4 人（规格书第 1 节）。 */
 export const CAPACITY_OPTIONS = [2, 3, 4, 5, 6] as const;
@@ -15,6 +15,8 @@ export interface LobbyMember {
 	readonly bot?: boolean;
 	/** 托管：真人连续超时后由人机代打，本人动一下或点「取消托管」就交还。离线的人也由人机代打，但不打这个标记。 */
 	readonly auto?: boolean;
+	/** 等候时选的怪兽（没选 = 开局随机分配）。 */
+	readonly monster?: MonsterId;
 }
 
 /** 房主在房间里随时可以改的「谁能进来」设置。 */
@@ -141,6 +143,8 @@ export interface ClientToServerEvents {
 	"room:dissolve": (ack: RoomAck<void>) => void;
 	/** 房主在等待时把一个空座位交给人机。移出人机用 room:kick。 */
 	"room:add-bot": (ack: RoomAck<void>) => void;
+	/** 等候时选怪兽，null = 随机。 */
+	"room:monster": (monster: MonsterId | null, ack: RoomAck<void>) => void;
 	/** 对局中打开 / 取消自己的托管。 */
 	"room:auto": (enabled: boolean, ack: RoomAck<void>) => void;
 	"admin:verify": (token: string, ack: RoomAck<void>) => void;

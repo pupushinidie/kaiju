@@ -190,8 +190,11 @@ export function scene(name: SceneName): GameState {
       return buildState({ players: 6, current: 2, dice: ["claw", "claw", "claw", "energy", "3", "3"], rolls: 1, rollsLeft: 2, p: { 0: { location: "city", vp: 11 }, 1: { location: "bay", vp: 7 } } });
     case "poisoned":
       return buildState({ players: 4, stage: "buy", p: { 0: { poison: 2, shrink: 1, life: 6 }, 2: { cards: ["poison-spit", "shrink-ray"] } } });
-    case "zeroDice":
-      return buildState({ players: 3, current: 1, p: { 1: { shrink: 6 } } });
+    case "zeroDice": {
+      // 缩小标记 6 个：一颗骰子都没有，回合一开始直接结算（进城心）
+      const state = buildState({ players: 3, current: 0, stage: "buy", p: { 0: { location: "city" }, 1: { shrink: 6 } } });
+      return applyCommand(state, "p1", { type: "END_TURN" });
+    }
     case "offline":
       // 对手离线是房间层面的（connected=false），局面就是普通的对手回合
       return buildState({ players: 4, current: 2, dice: ["1", "1", "heart", "claw", "energy", "3"], rolls: 1, rollsLeft: 2 });
@@ -211,8 +214,8 @@ export function scene(name: SceneName): GameState {
         p: {
           0: { location: "city", vp: 17, life: 4, cards: ALL_KEEP.slice(0, 6), poison: 2 },
           1: { location: "bay", vp: 12, life: 9, energy: 23, cards: ALL_KEEP.slice(6, 10) },
-          2: { vp: 19, life: 2, cards: ALL_KEEP.slice(10, 13), shrink: 3 },
-          3: { vp: 8, life: 10, energy: 6, cards: ["extra-head", "extra-head", ...ALL_KEEP.slice(14, 18)] },
+          2: { vp: 19, life: 2, cards: [ALL_KEEP[10]!, ...ALL_KEEP.slice(13, 15)], shrink: 3 },
+          3: { vp: 8, life: 10, energy: 6, cards: ["extra-head", "extra-head", ...ALL_KEEP.slice(15, 19)] },
           4: { alive: false },
           5: { vp: 0, life: 12, cards: ["even-bigger", ...ALL_KEEP.slice(19, 23)] },
         },

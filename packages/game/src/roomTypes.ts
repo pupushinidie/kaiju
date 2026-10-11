@@ -1,7 +1,7 @@
 import type { GameCommand, GameState } from "./types.js";
 
 /** 房间人数：2–4 人（规格书第 1 节）。 */
-export const CAPACITY_OPTIONS = [2, 3, 4] as const;
+export const CAPACITY_OPTIONS = [2, 3, 4, 5, 6] as const;
 export type Capacity = (typeof CAPACITY_OPTIONS)[number];
 
 export interface LobbyMember {

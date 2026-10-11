@@ -37,3 +37,29 @@ export function createRng(seed: number): Rng {
     },
   };
 }
+
+/**
+ * 按剧本出数的随机数（测试、预览、教程用）：faces 里依次是骰面（"1"|"2"|"3"|"energy"|"heart"|"claw"），
+ * 掷一颗骰子就取一个；用完后退回到 seed 的普通随机数。
+ */
+export function scriptedRng(faces: readonly string[], seed = 1): Rng {
+  const order = ["1", "2", "3", "energy", "heart", "claw"];
+  const queue = [...faces];
+  const fallback = createRng(seed);
+  const int = (maxExclusive: number) => {
+    if (maxExclusive === 6 && queue.length > 0) {
+      const index = order.indexOf(queue.shift()!);
+      if (index >= 0) return index;
+    }
+    return fallback.int(maxExclusive);
+  };
+  return {
+    next: () => fallback.next(),
+    int,
+    pick: (items) => items[int(items.length)]!,
+    shuffle: (items) => fallback.shuffle(items),
+    get state() {
+      return fallback.state;
+    },
+  };
+}

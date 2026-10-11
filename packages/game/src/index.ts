@@ -1,20 +1,31 @@
 export * from "./types.js";
-export * from "./board.js";
+export * from "./cards.js";
 export {
-  advanceRunners,
+  actorId,
+  alivePlayers,
   apply,
   applyCommand,
-  bustProbability,
+  cardCount,
+  cardPrice,
+  clawTargets,
   createGame,
+  currentPlayer,
   defaultConfig,
+  diceCountFor,
+  findOwnedCard,
+  hasCard,
   legalActions,
-  moveOptions,
+  maxLifeOf,
+  mimicTargets,
+  playerById,
   redactGameForViewer,
+  scoreDice,
+  stepTimeoutMs,
   timeoutTurn,
 } from "./engine.js";
 export type { NewPlayer } from "./engine.js";
 export { botCommand } from "./bot.js";
-export { createRng } from "./rng.js";
+export { createRng, scriptedRng } from "./rng.js";
 export type { Rng } from "./rng.js";
 export { CAPACITY_OPTIONS, DEFAULT_ROOM_ACCESS } from "./roomTypes.js";
 export type {
@@ -36,3 +47,5 @@ export type {
   VoiceParticipant,
   VoiceSignal,
 } from "./roomTypes.js";
+export { buildState, scene, applyScripted, SCENE_NAMES, PLAYER_NAMES } from "./scenes.js";
+export type { StateSpec, PlayerSpec, SceneName } from "./scenes.js";

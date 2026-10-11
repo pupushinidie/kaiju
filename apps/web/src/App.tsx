@@ -1,7 +1,7 @@
-import { useEffect, useMemo, useState, type FormEvent } from "react";
-import { CAPACITY_OPTIONS, type Capacity, type GameCommand, type LobbyRoomSnapshot, type PublicRoomSummary } from "@kaiju/game";
-import { dieArt, MONSTERS, monsterArt } from "./art.js";
-import { MONSTER_IDS } from "@kaiju/game";
+import { useEffect, useMemo, useRef, useState, type CSSProperties, type FormEvent } from "react";
+import { CAPACITY_OPTIONS, MONSTER_IDS, type Capacity, type GameCommand, type LobbyRoomSnapshot, type MonsterId, type PublicRoomSummary } from "@kaiju/game";
+import { bgArt, boardArt, MONSTERS, monsterArt } from "./art.js";
+import { NO_BGM, sfx, SoundToggle, useBgm, useRoomSfx } from "./gm-sound.js";
 import { useConfirm } from "./confirm.js";
 import GameBoard from "./GameBoard.js";
 import GameRules from "./GameRules.js";
@@ -30,7 +30,7 @@ function App() {
   const [confirmAction, confirmDialog] = useConfirm();
   // 白天 / 夜间画面：首页、等候房间、牌桌共用，顶栏按钮随时切换；和游戏中心、其他游戏共用同一个选择。
   const [theme, toggleTheme] = useTheme();
-  const themeToggle = <ThemeToggle theme={theme} onToggle={toggleTheme} />;
+  const themeToggle = <><ThemeToggle theme={theme} onToggle={toggleTheme} /><SoundToggle /></>;
   const [roomCode, setRoomCode] = useState("");
   const [room, setRoom] = useState<LobbyRoomSnapshot | null>(null);
   const [connected, setConnected] = useState(socket.connected);
@@ -41,6 +41,13 @@ function App() {
   // 观战时从谁的座位看（默认第一位玩家）。
   const [watchId, setWatchId] = useState("");
   const voice = useVoice(room);
+  const [tutorialOpen] = useState(false);
+  // 这款还没有背景音乐曲子：房间和教程里照样显示 ♪ 面板（音效、语音）
+  useBgm(room || tutorialOpen ? NO_BGM : null);
+  const chatSeen = useRef({ count: 0 });
+  const lastChat = room?.chat.at(-1);
+  if (room) chatSeen.current.count = room.chat.length;
+  useRoomSfx(room ? { members: room.members.length, playing: room.status === "playing", chatCount: chatSeen.current.count, lastChatMine: lastChat?.senderId === socket.id } : null);
 
   // 在房间里时服务端不推送在线牌桌列表；回到首页时主动拉一次最新的。
   useEffect(() => {
@@ -59,7 +66,10 @@ function App() {
     };
     const handleDisconnect = () => setConnected(false);
     const handleRoomUpdate = (snapshot: LobbyRoomSnapshot) => setRoom(snapshot);
-    const handleRoomError = (message: string) => setError(message);
+    const handleRoomError = (message: string) => {
+      sfx.error();
+      setError(message);
+    };
     const handleLobbyUpdate = (rooms: PublicRoomSummary[]) => setLobbyRooms(rooms);
     const handleRoomClosed = ({ reason }: { reason: string }) => {
       setRoom(null);
@@ -194,6 +204,7 @@ function App() {
   const kickMember = (memberId: string) => roomCommand((ack) => socket.emit("room:kick", memberId, ack));
   const addBot = () => roomCommand((ack) => socket.emit("room:add-bot", ack));
   const setAuto = (enabled: boolean) => roomCommand((ack) => socket.emit("room:auto", enabled, ack));
+  const pickMonster = (monster: MonsterId | null) => roomCommand((ack) => socket.emit("room:monster", monster, ack));
   const voteRematch = (accept: boolean) => roomCommand((ack) => socket.emit("room:rematch", accept, ack));
   async function dissolveRoom() {
     const ok = await confirmAction({
@@ -218,7 +229,7 @@ function App() {
     const players = room.game.players;
     const watched = players.some((player) => player.id === watchId) ? watchId : players[0]!.id;
     return (
-      <main className="app-shell cs-game">
+      <main className="app-shell kj-game" data-gc-table>
         <GameBoard
           room={room}
           busy={busy}
@@ -243,15 +254,16 @@ function App() {
 
   if (room) {
     return (
-      <main className="app-shell">
+      <main className="app-shell kj-lobby">
         <header className="topbar">
           <Brand />
           <div className="topbar-right">
+            <GameRules />
             {themeToggle}
             <ConnectionStatus connected={connected} />
           </div>
         </header>
-        <GameRules />
+        <div className="kj-room-page">
         <RoomView
           room={room}
           busy={busy}
@@ -263,16 +275,17 @@ function App() {
           onKick={kickMember}
           onAddBot={addBot}
           onDissolve={dissolveRoom}
+          onMonster={pickMonster}
         />
         <RoomChat room={room} voice={voice} />
-        <footer className="page-footer">再掷一次，还是就此扎营？</footer>
+        </div>
         {confirmDialog}
       </main>
     );
   }
 
   return (
-    <main className="app-shell">
+    <main className="app-shell kj-lobby kj-home">
       <header className="topbar">
         <Brand />
         <div className="topbar-right">
@@ -284,20 +297,24 @@ function App() {
 
       <section className="welcome-grid">
         <div className="welcome-copy">
-          <div className="eyebrow"><span className="eyebrow-line" /> 在线对战 · 2–4 人 · 测试版</div>
-          <h1>欲罢不能</h1>
+          <div className="eyebrow"><span className="eyebrow-line" /> 在线对战 · 2–6 人</div>
+          <h1>巨兽之城</h1>
           <p className="welcome-description">
-            掷 4 颗骰子，两两分组，带着 3 个登山者往 2–12 号登山路上爬。
-            每爬一步都要选：再掷一次继续冒险，还是收手扎营保住进度？贪心爆掉，这回合就白爬了。
-            先登顶 3 条路的人获胜。创建一间私人房间，或输入房间码加入朋友的对局；人不够可以加人机。
+            每人一只怪兽。掷 6 颗骰子：三个一样的数字得分，闪电攒能量买超能力卡，心回血，爪打人。
+            抢进城心每回合多拿 2 分，但要挨全场的打；被打急了可以让位。先到 20 分，或者把别的怪兽全打倒就赢。
+            创建一间私人房间，或输入房间码加入朋友的对局；人不够可以加人机。
           </p>
-          <img className="cs-hero" src={monsterArt.full("deer")} alt="" />
-          <div className="cs-showcase" aria-hidden="true">
+          <div className="kj-hero" aria-hidden="true">
+            <img className="kj-hero-bg" src={bgArt.night} alt="" />
+            <img className="kj-hero-board" src={boardArt.heart} alt="" />
+            <span className="kj-hero-monster" style={{ backgroundImage: `url(${monsterArt.idle("deer")})` }} />
+          </div>
+          <div className="kj-showcase" aria-hidden="true">
             {MONSTER_IDS.map((id) => <img key={id} src={monsterArt.mini(id)} alt={MONSTERS[id].name} />)}
-            {(["3", "energy", "heart", "claw"] as const).map((face) => <img key={face} className="cs-showcase-die" src={dieArt(face)} alt="" />)}
           </div>
         </div>
 
+        <div className="kj-home-right">
         <section className="entry-card" aria-labelledby="entry-title">
           <div className="entry-card-heading">
             <div>
@@ -388,26 +405,18 @@ function App() {
           </form>
           <div className="entry-footnote"><span className="lock-icon">◇</span> 默认邀请制 · 房主可以设为公开</div>
         </section>
+        <OnlineRooms rooms={lobbyRooms} connected={connected} busy={busy} onJoin={joinListed} />
+        </div>
       </section>
-
-      <section className="how-it-works" aria-label="游戏流程">
-        <div className="how-item"><span className="how-number">01</span><span>创建或加入</span></div>
-        <span className="how-divider" />
-        <div className="how-item"><span className="how-number">02</span><span>等待朋友就位</span></div>
-        <span className="how-divider" />
-        <div className="how-item"><span className="how-number">03</span><span>开始对局</span></div>
-      </section>
-      <OnlineRooms rooms={lobbyRooms} connected={connected} busy={busy} onJoin={joinListed} />
-      <footer className="page-footer">再掷一次，还是就此扎营？</footer>
     </main>
   );
 }
 
 function Brand() {
   return (
-    <a className="brand" href={import.meta.env.BASE_URL} aria-label="欲罢不能首页">
-      <span className="brand-mark" aria-hidden="true"><i /><i /><i /></span>
-      <span className="brand-name">欲罢不能<span> CAN'T STOP</span></span>
+    <a className="brand" href={import.meta.env.BASE_URL} aria-label="巨兽之城首页">
+      <img className="kj-brand-icon" src={monsterArt.icon("deer")} alt="" />
+      <span className="brand-name">巨兽之城<span> KAIJU</span></span>
     </a>
   );
 }
@@ -432,6 +441,7 @@ function RoomView({
   onKick,
   onAddBot,
   onDissolve,
+  onMonster,
 }: {
   room: LobbyRoomSnapshot;
   busy: boolean;
@@ -443,6 +453,7 @@ function RoomView({
   onKick: (memberId: string) => void;
   onAddBot: () => void;
   onDissolve: () => void;
+  onMonster: (monster: MonsterId | null) => void;
 }) {
   const { isHost, spectating } = roomRole(room);
   const openSeats = Math.max(0, room.capacity - room.members.length);
@@ -477,6 +488,9 @@ function RoomView({
             ) : (
               <div className="room-code-caption">从首页列表进来观战，看不到房间码</div>
             )}
+            {!spectating && <MonsterPicker room={room} onPick={onMonster} />}
+            <RoomSettingsPanel room={room} />
+            <SeatSwitch room={room} />
           </section>
 
           <section className="room-panel player-panel">
@@ -487,10 +501,12 @@ function RoomView({
             <div className="player-list">
               {room.members.map((member, index) => (
                 <div className="player-row" key={member.id}>
-                  <div className={`player-avatar avatar-${(index % 4) + 1}`}>{member.name.slice(0, 1).toUpperCase()}</div>
+                  {member.monster
+                    ? <img className="kj-room-avatar" src={monsterArt.icon(member.monster)} alt={MONSTERS[member.monster].name} />
+                    : <div className={`player-avatar avatar-${(index % 4) + 1}`}>{member.name.slice(0, 1).toUpperCase()}</div>}
                   <div className="player-details">
                     <strong>{member.name}{member.id === socket.id ? <small>你</small> : null}</strong>
-                    <span>{member.isHost ? "房主" : member.bot ? "人机 · 普通难度" : "已加入"}</span>
+                    <span>{member.monster ? MONSTERS[member.monster].name : member.bot ? "人机 · 怪兽随机" : "怪兽随机"}</span>
                   </div>
                   {member.isHost && <span className="host-badge">房主</span>}
                   {member.bot && <span className="bot-badge">人机</span>}
@@ -507,9 +523,7 @@ function RoomView({
                 </div>
               ))}
             </div>
-            <p className="field-hint">每一步限时 45 秒：没掷骰就超时跳过这回合，掷了骰子后超时自动收手。</p>
-            <RoomSettingsPanel room={room} />
-            <SeatSwitch room={room} />
+            <p className="field-hint">限时：掷骰 40 秒（超时不再重掷，直接结算）、让位 20 秒（超时留下）、买卡 30 秒（超时结束回合）。</p>
             <div className="room-actions">
               {isHost ? (
                 <button className="primary-button" type="button" onClick={onStart} disabled={busy || room.members.length < 2}>
@@ -528,6 +542,36 @@ function RoomView({
       {notice && <p className="feedback feedback-success room-feedback" role="status">{notice}</p>}
       <div className="room-secure-note"><span>◇</span> {room.access.open ? "公开房间：首页列表里的人可以直接加入空座位。" : "邀请制：要有房间码才能加入；首页列表不显示房间码。"}</div>
     </section>
+  );
+}
+
+/** 等候房间里选怪兽：点一只选上，再点一下改回随机；别人选了的变暗。 */
+function MonsterPicker({ room, onPick }: { room: LobbyRoomSnapshot; onPick: (monster: MonsterId | null) => void }) {
+  const mine = room.members.find((member) => member.id === socket.id);
+  return (
+    <div className="kj-monster-pick" role="group" aria-label="选你的怪兽">
+      <span className="field-label">你的怪兽 <small>{mine?.monster ? MONSTERS[mine.monster].name : "随机"}</small></span>
+      <div className="kj-monster-row">
+        {MONSTER_IDS.map((id) => {
+          const owner = room.members.find((member) => member.monster === id);
+          const selected = owner?.id === socket.id;
+          const taken = owner !== undefined && !selected;
+          return (
+            <button
+              key={id}
+              type="button"
+              className={selected ? "kj-monster-option selected" : "kj-monster-option"}
+              disabled={taken}
+              title={taken ? `${owner!.name} 选了` : MONSTERS[id].name}
+              onClick={() => onPick(selected ? null : id)}
+              style={{ "--seat": MONSTERS[id].hex } as CSSProperties}
+            >
+              <img src={monsterArt.mini(id)} alt={MONSTERS[id].name} />
+            </button>
+          );
+        })}
+      </div>
+    </div>
   );
 }
 

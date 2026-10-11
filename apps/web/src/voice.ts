@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import type { IceServerConfig, LobbyRoomSnapshot, VoiceSignal } from "@kaiju/game";
 import { socket } from "./socket.js";
+import { registerVoiceAudio, unregisterVoiceAudio } from "./gm-sound.js";
 
 /** 网址带 ?voice-relay 时强制走 TURN 中转，用于检查中转服务是否可用。 */
 const FORCE_RELAY = new URLSearchParams(window.location.search).has("voice-relay");
@@ -83,6 +84,8 @@ export function useVoice(room: LobbyRoomSnapshot | null): VoiceControls {
     const pc = new RTCPeerConnection({ iceServers: iceServers.current, iceTransportPolicy: FORCE_RELAY ? "relay" : "all" });
     const audio = new Audio();
     audio.autoplay = true;
+    // 别人说话的开关和音量跟着 ♪ 面板的「语音」走
+    registerVoiceAudio(audio);
     const peer: Peer = { pc, audio, pendingCandidates: [], localAdded: false };
     peers.current.set(peerId, peer);
 
@@ -120,6 +123,7 @@ export function useVoice(room: LobbyRoomSnapshot | null): VoiceControls {
     const peer = peers.current.get(peerId);
     if (!peer) return;
     peer.pc.close();
+    unregisterVoiceAudio(peer.audio);
     peer.audio.srcObject = null;
     peers.current.delete(peerId);
     analysers.current.delete(peerId);

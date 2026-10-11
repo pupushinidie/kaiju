@@ -24,7 +24,8 @@ export {
   timeoutTurn,
 } from "./engine.js";
 export type { NewPlayer } from "./engine.js";
-export { botCommand } from "./bot.js";
+export { botCommand, botDecision, botTuning, cardValue } from "./bot.js";
+export type { BotDecision } from "./bot.js";
 export { createRng, scriptedRng } from "./rng.js";
 export type { Rng } from "./rng.js";
 export { CAPACITY_OPTIONS, DEFAULT_ROOM_ACCESS } from "./roomTypes.js";

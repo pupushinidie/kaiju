@@ -33,7 +33,7 @@ function actedBy(room: LobbyRoomSnapshot, playerId: string): boolean {
 const MIN_CAPACITY: Capacity = 2;
 const MIN_PLAYERS = 2;
 /** 「一个人加满人机」用几人房；「加满后加不了」用几人房。 */
-const SOLO_CAPACITY: Capacity = 4;
+const SOLO_CAPACITY: Capacity = 6;
 const FULL_TEST_CAPACITY: Capacity = 3;
 // ----------------------------------------
 
@@ -174,7 +174,7 @@ describe("人机", () => {
     await create(host, nick("独行"), SOLO_CAPACITY);
     for (let seat = 1; seat < SOLO_CAPACITY; seat += 1) expect((await addBot(host)).ok).toBe(true);
     const names = (await updateWhere(host, (snapshot) => snapshot.members.length === SOLO_CAPACITY)).members.map((member) => member.name);
-    expect(names.slice(1)).toEqual(["咕噜一号", "咕噜二号", "咕噜三号", "咕噜四号"].slice(0, SOLO_CAPACITY - 1));
+    expect(names.slice(1)).toEqual(["咕噜一号", "咕噜二号", "咕噜三号", "咕噜四号", "咕噜五号"].slice(0, SOLO_CAPACITY - 1));
 
     expect((await start(host)).ok).toBe(true);
     const stop = autoplay(host);

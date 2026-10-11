@@ -50,3 +50,17 @@ export type {
 } from "./roomTypes.js";
 export { buildState, scene, applyScripted, SCENE_NAMES, PLAYER_NAMES } from "./scenes.js";
 export type { StateSpec, PlayerSpec, SceneName } from "./scenes.js";
+export {
+  affordable,
+  anchorVisible,
+  createPracticeGame,
+  createTutorialGame,
+  createTutorialRng,
+  sameCommand,
+  TUTORIAL_BOTS,
+  TUTORIAL_DICE,
+  TUTORIAL_SELF,
+  TUTORIAL_SKYSCRAPER,
+  TUTORIAL_STEPS,
+} from "./tutorial.js";
+export type { TutorialFace, TutorialRng, TutorialStep } from "./tutorial.js";

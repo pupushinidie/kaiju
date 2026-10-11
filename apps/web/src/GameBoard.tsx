@@ -25,6 +25,9 @@ import { useSfxCountdown } from "./gm-sound.js";
 import { pickScales, type Scales } from "./layout.js";
 import { GameRoomMenu } from "./RoomExtras.js";
 import { socket } from "./socket.js";
+import { Coach, TipToast } from "./tutorial/Coach.js";
+import { useFirstTimeTips } from "./tutorial/tips.js";
+import { detectTips, GAME_ID, hintFor, TIPS, type Hint } from "./tutorialGame.js";
 
 interface GameBoardProps {
   readonly room: LobbyRoomSnapshot;
@@ -50,6 +53,10 @@ interface GameBoardProps {
   readonly coach?: ReactNode;
   readonly allow?: (command: GameCommand) => boolean;
   readonly selfOverride?: string;
+  /** online：真实对局（默认）；tutorial：剧本进行中（不出提示和小贴士）；practice：练习局（随时能看提示）。 */
+  readonly mode?: "online" | "tutorial" | "practice";
+  /** 结算框里替代「再来一局」的按钮（练习局放「结束教程」「再练一局」）。 */
+  readonly finalActions?: ReactNode;
 }
 
 type Banner = { key: string; text: string; tone: "turn" | "hit" | "city" | "ko" | "info" };
@@ -121,6 +128,26 @@ function GameBoard(props: GameBoardProps) {
 
   useGameSfx(game, selfId);
   useSfxCountdown(canAct, secondsLeft);
+  const mode = props.mode ?? "online";
+
+  // 「提示」：练习局随时能用；真实对局里只有自己和人机时能用（有别的真人就不显示，免得不公平）
+  const botsOnly = room.members.length > 1 && room.members.every((candidate) => candidate.playerId === myId || candidate.bot === true);
+  const canHint = canAct && (mode === "practice" || (mode === "online" && botsOnly));
+  const [hint, setHint] = useState<{ version: number; hint: Hint } | null>(null);
+  const shownHint = hint && hint.version === game.version && canHint ? hint.hint : null;
+  const toggleHint = () => setHint((current) => (current && current.version === game.version ? null : { version: game.version, hint: hintFor(game, myId) }));
+  useEffect(() => {
+    if (!canHint) return;
+    const handle = (event: KeyboardEvent) => {
+      const target = event.target as HTMLElement | null;
+      if (event.metaKey || event.ctrlKey || event.altKey || target?.closest("input, textarea, [contenteditable]")) return;
+      if (event.key.toLowerCase() === "h") toggleHint();
+    };
+    window.addEventListener("keydown", handle);
+    return () => window.removeEventListener("keydown", handle);
+  }, [canHint, game.version]);
+  // 真实对局里第一次遇到某条规则（第一次进城心、第一次中毒……）时弹一句小贴士
+  const tips = useFirstTimeTips(GAME_ID, game.version, () => detectTips(game, myId), TIPS, mode === "online" && !spectating);
 
   const send = (command: GameCommand) => {
     if (allow && !allow(command)) return;
@@ -404,6 +431,9 @@ function GameBoard(props: GameBoardProps) {
         <section className={`kj-center ${scales.arrangement}`} ref={centerRef}>
           <div className={canAct ? "kj-prompt mine" : "kj-prompt"} role="status" data-tutorial="prompt">
             <span>{prompt}</span>
+            {canHint && (
+              <button className={shownHint ? "quiet-button kj-hint on" : "quiet-button kj-hint"} type="button" data-tutorial="hint" onClick={toggleHint}>提示</button>
+            )}
             {autoPlaying && playing && <button className="quiet-button kj-auto-cancel" type="button" onClick={() => onAuto(false)} data-tutorial="auto-cancel">取消托管</button>}
             {(error || shownNotice) && <em className={error ? "kj-feedback error" : "kj-feedback"} role={error ? "alert" : "status"}>{error || shownNotice}</em>}
           </div>
@@ -507,7 +537,21 @@ function GameBoard(props: GameBoardProps) {
       {canAct && game.prompt?.kind === "wings" && game.prompt.player === selfId && (
         <WingsDialog damage={game.prompt.damage} energy={me.energy} secondsLeft={showTimer ? secondsLeft : null} onAnswer={(answer) => send({ type: "WINGS", use: answer })} />
       )}
-      {game.phase === "finished" && <FinalDialog game={game} room={room} selfId={selfId} spectating={spectating} onRematch={onRematch} onLeave={onLeave} />}
+      {game.phase === "finished" && <FinalDialog game={game} room={room} selfId={selfId} spectating={spectating} onRematch={onRematch} onLeave={onLeave} actions={props.finalActions} />}
+      {shownHint && (
+        <Coach
+          view={{
+            key: `hint-${game.version}`,
+            say: shownHint.say,
+            ...(shownHint.note ? { note: shownHint.note } : {}),
+            anchor: shownHint.anchor,
+            focus: false,
+            face: "think",
+            actions: <button className="quiet-button" type="button" onClick={() => setHint(null)}>知道了</button>,
+          }}
+        />
+      )}
+      {tips.tip && <TipToast tip={tips.tip} onClose={tips.dismiss} onNever={tips.never} />}
     </div>
   );
 }
@@ -879,7 +923,8 @@ function LogPanel({ game, nameOf }: { game: GameState; nameOf: (id: string) => s
   );
 }
 
-function FinalDialog({ game, room, selfId, spectating, onRematch, onLeave }: {
+function FinalDialog({ game, room, selfId, spectating, onRematch, onLeave, actions }: {
+  actions?: ReactNode;
   game: GameState;
   room: LobbyRoomSnapshot;
   selfId: string;
@@ -911,7 +956,9 @@ function FinalDialog({ game, room, selfId, spectating, onRematch, onLeave }: {
           </li>
         ))}
       </ol>
-      {spectating ? (
+      {actions ? (
+        <div className="kj-rematch"><div className="gm-panel-actions">{actions}</div></div>
+      ) : spectating ? (
         <div className="kj-rematch">
           <span>{room.rematch ? `等玩家决定要不要再来一局（${room.rematch.acceptedIds.length}/${room.members.length}）` : "对局结束"}</span>
           <div className="gm-panel-actions"><button className="quiet-button" type="button" onClick={onLeave}>离开观战</button></div>

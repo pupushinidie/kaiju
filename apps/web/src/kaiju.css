@@ -455,7 +455,10 @@
 .app-shell .kj-room-page .room-grid { grid-template-columns: minmax(300px, 0.9fr) minmax(0, 1.1fr); gap: 16px; }
 .app-shell .kj-room-page .room-panel { padding: 16px; }
 .app-shell .kj-room-page .player-row { min-height: 44px; gap: 8px; }
-.app-shell .kj-room-page .room-chat.light { position: sticky; top: 12px; margin: 0; height: min(620px, calc(100dvh - 100px)); display: flex; flex-direction: column; }
+.kj-room-side { position: sticky; top: 12px; display: flex; flex-direction: column; gap: 10px; height: min(640px, calc(100dvh - 100px)); min-width: 0; }
+.app-shell .kj-room-side .tut-invite, .app-shell .kj-room-side .tut-again { margin: 0; }
+.app-shell .kj-room-side .tut-again { align-self: flex-start; }
+.app-shell .kj-room-page .room-chat.light { flex: 1; min-height: 0; margin: 0; display: flex; flex-direction: column; }
 .app-shell .kj-room-page .room-chat.light .room-chat-list { flex: 1; min-height: 0; }
 .app-shell .kj-room-page .room-actions .primary-button { margin-top: 10px; }
 .app-shell .kj-room-page .room-secure-note { margin-top: 10px; }
@@ -469,7 +472,8 @@
 @media (max-width: 850px) {
   .app-shell.kj-lobby { width: calc(100% - 24px); }
   .kj-room-page, .app-shell .kj-room-page .room-grid, .app-shell.kj-home .welcome-grid { grid-template-columns: 1fr; }
-  .app-shell .kj-room-page .room-chat.light { position: static; height: 420px; }
+  .kj-room-side { position: static; height: auto; }
+  .app-shell .kj-room-page .room-chat.light { height: 420px; flex: none; }
   .app-shell.kj-home .welcome-copy h1 { font-size: 36px; }
 }
 .app-shell.kj-home .entry-card-heading, .app-shell.kj-home .online-rooms-note { display: none; }
@@ -488,3 +492,16 @@
 .app-shell.kj-home .capacity-option span { white-space: nowrap; }
 @media (max-width: 1100px) { .app-shell.kj-home .capacity-option span { display: none; } }
 @media (max-width: 850px) { .app-shell.kj-home .welcome-grid { grid-template-columns: minmax(0, 1fr); } .app-shell.kj-home .entry-card { min-width: 0; } }
+
+/* ---------- 教程、提示 ---------- */
+.app-shell .kj-hint { margin-left: auto; padding: 2px 10px; font-size: 12px; }
+.app-shell .kj-hint.on { --rim: var(--gold); color: var(--gold); }
+.kj-room-main { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.app-shell .kj-room-main .tut-invite { margin: 0; }
+.app-shell .kj-room-main .tut-again { align-self: flex-start; margin: 0; }
+.kj-chat .tut-checklist { flex: 1; min-height: 0; overflow-y: auto; }
+.app-shell.kj-home .tut-invite { margin: 10px 0 0; }
+.app-shell.kj-home .tut-again { margin-top: 10px; }
+
+/* 首页：有教程邀请卡时把怪兽一排让出来 */
+.app-shell.kj-home .tut-invite ~ .kj-hero + .kj-showcase { display: none; }

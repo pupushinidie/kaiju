@@ -1,0 +1,853 @@
+{
+ "style": "B · Q 版桌面沙盘",
+ "items": {
+  "bg/night.png": {
+   "source": "r1/bg-night-s2103.png",
+   "candidates": [
+    "r1/bg-night-s2101.png",
+    "r1/bg-night-s2102.png"
+   ],
+   "note": ""
+  },
+  "bg/day.png": {
+   "source": "r1/bg-day-s2202.png",
+   "candidates": [
+    "r1/bg-day-s2201.png",
+    "r1/bg-day-s2203.png"
+   ],
+   "note": ""
+  },
+  "board/heart.png": {
+   "source": "r1/board-heart-s4103.png",
+   "candidates": [
+    "r1/board-heart-s4101.png",
+    "r1/board-heart-s4102.png",
+    "r1/board-heart-s4104.png"
+   ],
+   "note": "怪兽脚底落点 (84, 68)"
+  },
+  "board/harbor.png": {
+   "source": "r1/board-harbor-s4103.png",
+   "candidates": [
+    "r1/board-harbor-s4101.png",
+    "r1/board-harbor-s4102.png",
+    "r1/board-harbor-s4104.png"
+   ],
+   "note": "怪兽脚底落点 (84, 80)"
+  },
+  "monsters/deer.png": {
+   "source": "r1/mon-deer-s3101.png",
+   "candidates": [
+    "r1/mon-deer-s3102.png",
+    "r1/mon-deer-s3103.png",
+    "r1/mon-deer-s3104.png"
+   ],
+   "note": ""
+  },
+  "monsters/deer-mini.png": {
+   "source": "r2/mini64-deer-s6101.png",
+   "candidates": [],
+   "note": ""
+  },
+  "monsters/deer-icon.png": {
+   "source": "r2/mini32-deer-s6101.png",
+   "candidates": [],
+   "note": ""
+  },
+  "monsters/deer-idle.png": {
+   "source": "r2/anim/idle-deer-s6202",
+   "candidates": [],
+   "note": "帧序 [0, 1, 2, 3, 4, 5, 6, 7]"
+  },
+  "monsters/jelly.png": {
+   "source": "r1/mon-jelly-s3103.png",
+   "candidates": [
+    "r1/mon-jelly-s3101.png",
+    "r1/mon-jelly-s3102.png",
+    "r1/mon-jelly-s3104.png"
+   ],
+   "note": ""
+  },
+  "monsters/jelly-mini.png": {
+   "source": "r2/mini64-jelly-s6101.png",
+   "candidates": [],
+   "note": ""
+  },
+  "monsters/jelly-icon.png": {
+   "source": "r2/mini32-jelly-s6101.png",
+   "candidates": [],
+   "note": ""
+  },
+  "monsters/jelly-idle.png": {
+   "source": "r2/anim/idle-jelly-s6202",
+   "candidates": [],
+   "note": "帧序 [0, 1, 2, 3, 4, 5, 6, 7]"
+  },
+  "monsters/robot.png": {
+   "source": "r1/mon-robot-s3104.png",
+   "candidates": [
+    "r1/mon-robot-s3101.png",
+    "r1/mon-robot-s3102.png",
+    "r1/mon-robot-s3103.png"
+   ],
+   "note": ""
+  },
+  "monsters/robot-mini.png": {
+   "source": "r2/mini64-robot-s6101.png",
+   "candidates": [],
+   "note": ""
+  },
+  "monsters/robot-icon.png": {
+   "source": "r2/mini32-robot-s6101.png",
+   "candidates": [],
+   "note": ""
+  },
+  "monsters/robot-idle.png": {
+   "source": "r2/anim/idle-robot-s6201",
+   "candidates": [],
+   "note": "帧序 [0, 1, 2, 3, 4, 5, 6, 7]"
+  },
+  "monsters/cloud.png": {
+   "source": "r1/mon-cloud-s3104.png",
+   "candidates": [
+    "r1/mon-cloud-s3101.png",
+    "r1/mon-cloud-s3102.png",
+    "r1/mon-cloud-s3103.png"
+   ],
+   "note": ""
+  },
+  "monsters/cloud-mini.png": {
+   "source": "r2/mini64-cloud-s6101.png",
+   "candidates": [],
+   "note": ""
+  },
+  "monsters/cloud-icon.png": {
+   "source": "r2/mini32-cloud-s6101.png",
+   "candidates": [],
+   "note": ""
+  },
+  "monsters/cloud-idle.png": {
+   "source": "r2/anim/idle-cloud-s6202",
+   "candidates": [],
+   "note": "帧序 [0, 1, 2, 3, 4, 5, 6, 7]"
+  },
+  "monsters/moss.png": {
+   "source": "r1/mon-moss-s3101.png",
+   "candidates": [
+    "r1/mon-moss-s3102.png",
+    "r1/mon-moss-s3103.png",
+    "r1/mon-moss-s3104.png"
+   ],
+   "note": ""
+  },
+  "monsters/moss-mini.png": {
+   "source": "r2/mini64-moss-s6101.png",
+   "candidates": [],
+   "note": ""
+  },
+  "monsters/moss-icon.png": {
+   "source": "r2/mini32-moss-s6101.png",
+   "candidates": [],
+   "note": ""
+  },
+  "monsters/moss-idle.png": {
+   "source": "r2/anim/idle-moss-s6201",
+   "candidates": [],
+   "note": "帧序 [0, 1, 2, 3, 4, 5, 6, 7]"
+  },
+  "monsters/crab.png": {
+   "source": "r1/mon-crab-s3101.png",
+   "candidates": [
+    "r1/mon-crab-s3102.png",
+    "r1/mon-crab-s3103.png",
+    "r1/mon-crab-s3104.png"
+   ],
+   "note": ""
+  },
+  "monsters/crab-mini.png": {
+   "source": "r2/mini64-crab-s6101.png",
+   "candidates": [],
+   "note": ""
+  },
+  "monsters/crab-icon.png": {
+   "source": "r2/mini32-crab-s6101.png",
+   "candidates": [],
+   "note": ""
+  },
+  "monsters/crab-idle.png": {
+   "source": "r2/anim/idle-crab-s6201",
+   "candidates": [],
+   "note": "帧序 [0, 1, 2, 3, 4, 5, 6, 7]"
+  },
+  "icons/energy.png": {
+   "source": "r1/ic-energy/ic-energy.png",
+   "candidates": [
+    "r1/ic-energy/ic-energy-19.png",
+    "r1/ic-energy/ic-energy-10.png"
+   ],
+   "note": ""
+  },
+  "icons/heart.png": {
+   "source": "r1/ic-heart/ic-heart-17.png",
+   "candidates": [
+    "r1/ic-heart/ic-heart-3.png",
+    "r1/ic-heart/ic-heart-9.png"
+   ],
+   "note": ""
+  },
+  "icons/star.png": {
+   "source": "r1/ic-star/ic-star.png",
+   "candidates": [
+    "r1/ic-star/ic-star-20.png",
+    "r1/ic-star/ic-star-4.png"
+   ],
+   "note": ""
+  },
+  "icons/claw.png": {
+   "source": "r1/ic-claw/ic-claw-61.png",
+   "candidates": [
+    "r1/ic-claw/ic-claw-9.png",
+    "r1/ic-claw/ic-claw.png"
+   ],
+   "note": ""
+  },
+  "icons/crown.png": {
+   "source": "r1/ic-crown/ic-crown-4.png",
+   "candidates": [
+    "r1/ic-crown/ic-crown.png",
+    "r1/ic-crown/ic-crown-16.png"
+   ],
+   "note": ""
+  },
+  "tokens/poison.png": {
+   "source": "r1/tok-poison/tok-poison-41.png",
+   "candidates": [
+    "r1/tok-poison/tok-poison-2.png",
+    "r1/tok-poison/tok-poison-17.png"
+   ],
+   "note": ""
+  },
+  "tokens/shrink.png": {
+   "source": "r1/tok-shrink/tok-shrink-7.png",
+   "candidates": [
+    "r1/tok-shrink/tok-shrink-14.png",
+    "r1/tok-shrink/tok-shrink-23.png"
+   ],
+   "note": ""
+  },
+  "tokens/smoke.png": {
+   "source": "r1/tok-smoke/tok-smoke.png",
+   "candidates": [
+    "r1/tok-smoke/tok-smoke-13.png",
+    "r1/tok-smoke/tok-smoke-8.png"
+   ],
+   "note": ""
+  },
+  "tokens/mimic.png": {
+   "source": "r1/tok-mimic/tok-mimic-2.png",
+   "candidates": [
+    "r1/tok-mimic/tok-mimic-6.png",
+    "r1/tok-mimic/tok-mimic-18.png"
+   ],
+   "note": ""
+  },
+  "cards/art/apartment-building.png": {
+   "source": "r1/card-apartment-building-s5102.png",
+   "candidates": [
+    "r1/card-apartment-building-s5101.png",
+    "r1/card-apartment-building-s5103.png"
+   ],
+   "note": "公寓大楼（一次性，5 能量，1 张）"
+  },
+  "cards/art/commuter-train.png": {
+   "source": "r1/card-commuter-train-s5102.png",
+   "candidates": [
+    "r1/card-commuter-train-s5101.png",
+    "r1/card-commuter-train-s5103.png"
+   ],
+   "note": "通勤列车（一次性，4 能量，1 张）"
+  },
+  "cards/art/corner-store.png": {
+   "source": "r1/card-corner-store-s5102.png",
+   "candidates": [
+    "r1/card-corner-store-s5101.png",
+    "r1/card-corner-store-s5103.png"
+   ],
+   "note": "街角小店（一次性，3 能量，1 张）"
+  },
+  "cards/art/drop-from-high-altitude.png": {
+   "source": "r1/card-drop-from-high-altitude-s5102.png",
+   "candidates": [
+    "r1/card-drop-from-high-altitude-s5101.png",
+    "r1/card-drop-from-high-altitude-s5103.png"
+   ],
+   "note": "高空坠落（一次性，5 能量，1 张）"
+  },
+  "cards/art/energize.png": {
+   "source": "r1/card-energize-s5102.png",
+   "candidates": [
+    "r1/card-energize-s5101.png",
+    "r1/card-energize-s5103.png"
+   ],
+   "note": "充能（一次性，8 能量，1 张）"
+  },
+  "cards/art/evacuation-orders.png": {
+   "source": "r1/card-evacuation-orders-s5101.png",
+   "candidates": [
+    "r1/card-evacuation-orders-s5102.png",
+    "r1/card-evacuation-orders-s5103.png"
+   ],
+   "note": "疏散令（一次性，7 能量，2 张）"
+  },
+  "cards/art/fire-blast.png": {
+   "source": "r1/card-fire-blast-s5101.png",
+   "candidates": [
+    "r1/card-fire-blast-s5102.png",
+    "r1/card-fire-blast-s5103.png"
+   ],
+   "note": "火焰冲击（一次性，3 能量，1 张）"
+  },
+  "cards/art/frenzy.png": {
+   "source": "r3/card-frenzy-s5111.png",
+   "candidates": [
+    "r1/card-frenzy-s5101.png",
+    "r1/card-frenzy-s5102.png",
+    "r1/card-frenzy-s5103.png",
+    "r3/card-frenzy-s5112.png",
+    "r3/card-frenzy-s5113.png"
+   ],
+   "note": "狂暴（一次性，7 能量，1 张）"
+  },
+  "cards/art/gas-refinery.png": {
+   "source": "r1/card-gas-refinery-s5102.png",
+   "candidates": [
+    "r1/card-gas-refinery-s5101.png",
+    "r1/card-gas-refinery-s5103.png"
+   ],
+   "note": "瓦斯精炼厂（一次性，6 能量，1 张）"
+  },
+  "cards/art/heal.png": {
+   "source": "r1/card-heal-s5102.png",
+   "candidates": [
+    "r1/card-heal-s5101.png",
+    "r1/card-heal-s5103.png"
+   ],
+   "note": "治疗（一次性，3 能量，1 张）"
+  },
+  "cards/art/high-altitude-bombing.png": {
+   "source": "r1/card-high-altitude-bombing-s5102.png",
+   "candidates": [
+    "r1/card-high-altitude-bombing-s5101.png",
+    "r1/card-high-altitude-bombing-s5103.png"
+   ],
+   "note": "高空轰炸（一次性，4 能量，1 张）"
+  },
+  "cards/art/jet-fighters.png": {
+   "source": "r1/card-jet-fighters-s5103.png",
+   "candidates": [
+    "r1/card-jet-fighters-s5101.png",
+    "r1/card-jet-fighters-s5102.png"
+   ],
+   "note": "战斗机（一次性，5 能量，1 张）"
+  },
+  "cards/art/national-guard.png": {
+   "source": "r1/card-national-guard-s5101.png",
+   "candidates": [
+    "r1/card-national-guard-s5102.png",
+    "r1/card-national-guard-s5103.png"
+   ],
+   "note": "国民警卫队（一次性，3 能量，1 张）"
+  },
+  "cards/art/nuclear-power-plant.png": {
+   "source": "r1/card-nuclear-power-plant-s5102.png",
+   "candidates": [
+    "r1/card-nuclear-power-plant-s5101.png",
+    "r1/card-nuclear-power-plant-s5103.png"
+   ],
+   "note": "核电站（一次性，6 能量，1 张）"
+  },
+  "cards/art/skyscraper.png": {
+   "source": "r1/card-skyscraper-s5103.png",
+   "candidates": [
+    "r1/card-skyscraper-s5101.png",
+    "r1/card-skyscraper-s5102.png"
+   ],
+   "note": "摩天楼（一次性，6 能量，1 张）"
+  },
+  "cards/art/tanks.png": {
+   "source": "r1/card-tanks-s5101.png",
+   "candidates": [
+    "r1/card-tanks-s5102.png",
+    "r1/card-tanks-s5103.png"
+   ],
+   "note": "坦克（一次性，4 能量，1 张）"
+  },
+  "cards/art/vast-storm.png": {
+   "source": "r3/card-vast-storm-s5113.png",
+   "candidates": [
+    "r1/card-vast-storm-s5101.png",
+    "r1/card-vast-storm-s5102.png",
+    "r1/card-vast-storm-s5103.png",
+    "r3/card-vast-storm-s5111.png",
+    "r3/card-vast-storm-s5112.png"
+   ],
+   "note": "大风暴（一次性，6 能量，1 张）"
+  },
+  "cards/art/acid-attack.png": {
+   "source": "r1/card-acid-attack-s5101.png",
+   "candidates": [
+    "r1/card-acid-attack-s5102.png",
+    "r1/card-acid-attack-s5103.png"
+   ],
+   "note": "酸液攻击（保留，6 能量，1 张）"
+  },
+  "cards/art/alien-metabolism.png": {
+   "source": "r3/card-alien-metabolism-s5113.png",
+   "candidates": [
+    "r1/card-alien-metabolism-s5101.png",
+    "r1/card-alien-metabolism-s5102.png",
+    "r1/card-alien-metabolism-s5103.png",
+    "r3/card-alien-metabolism-s5111.png",
+    "r3/card-alien-metabolism-s5112.png"
+   ],
+   "note": "外星新陈代谢（保留，3 能量，1 张）"
+  },
+  "cards/art/alpha-monster.png": {
+   "source": "r3/card-alpha-monster-s5111.png",
+   "candidates": [
+    "r1/card-alpha-monster-s5101.png",
+    "r1/card-alpha-monster-s5102.png",
+    "r1/card-alpha-monster-s5103.png",
+    "r3/card-alpha-monster-s5112.png",
+    "r3/card-alpha-monster-s5113.png"
+   ],
+   "note": "头号怪兽（保留，5 能量，1 张）"
+  },
+  "cards/art/armor-plating.png": {
+   "source": "r1/card-armor-plating-s5103.png",
+   "candidates": [
+    "r1/card-armor-plating-s5101.png",
+    "r1/card-armor-plating-s5102.png"
+   ],
+   "note": "装甲板（保留，4 能量，1 张）"
+  },
+  "cards/art/background-dweller.png": {
+   "source": "r3/card-background-dweller-s5113.png",
+   "candidates": [
+    "r1/card-background-dweller-s5101.png",
+    "r1/card-background-dweller-s5102.png",
+    "r1/card-background-dweller-s5103.png",
+    "r3/card-background-dweller-s5111.png",
+    "r3/card-background-dweller-s5112.png"
+   ],
+   "note": "背景住户（保留，4 能量，1 张）"
+  },
+  "cards/art/burrowing.png": {
+   "source": "r3/card-burrowing-s5113.png",
+   "candidates": [
+    "r1/card-burrowing-s5101.png",
+    "r1/card-burrowing-s5102.png",
+    "r1/card-burrowing-s5103.png",
+    "r3/card-burrowing-s5111.png",
+    "r3/card-burrowing-s5112.png"
+   ],
+   "note": "钻地（保留，5 能量，1 张）"
+  },
+  "cards/art/camouflage.png": {
+   "source": "r1/card-camouflage-s5103.png",
+   "candidates": [
+    "r1/card-camouflage-s5101.png",
+    "r1/card-camouflage-s5102.png"
+   ],
+   "note": "伪装（保留，3 能量，1 张）"
+  },
+  "cards/art/complete-destruction.png": {
+   "source": "r1/card-complete-destruction-s5101.png",
+   "candidates": [
+    "r1/card-complete-destruction-s5102.png",
+    "r1/card-complete-destruction-s5103.png"
+   ],
+   "note": "彻底破坏（保留，3 能量，1 张）"
+  },
+  "cards/art/dedicated-news-team.png": {
+   "source": "r1/card-dedicated-news-team-s5103.png",
+   "candidates": [
+    "r1/card-dedicated-news-team-s5101.png",
+    "r1/card-dedicated-news-team-s5102.png"
+   ],
+   "note": "专属新闻组（保留，3 能量，1 张）"
+  },
+  "cards/art/eater-of-the-dead.png": {
+   "source": "r1/card-eater-of-the-dead-s5103.png",
+   "candidates": [
+    "r1/card-eater-of-the-dead-s5101.png",
+    "r1/card-eater-of-the-dead-s5102.png"
+   ],
+   "note": "食尸者（保留，4 能量，1 张）"
+  },
+  "cards/art/energy-hoarder.png": {
+   "source": "r1/card-energy-hoarder-s5101.png",
+   "candidates": [
+    "r1/card-energy-hoarder-s5102.png",
+    "r1/card-energy-hoarder-s5103.png"
+   ],
+   "note": "能量囤积者（保留，3 能量，1 张）"
+  },
+  "cards/art/even-bigger.png": {
+   "source": "r3/card-even-bigger-s5113.png",
+   "candidates": [
+    "r1/card-even-bigger-s5101.png",
+    "r1/card-even-bigger-s5102.png",
+    "r1/card-even-bigger-s5103.png",
+    "r3/card-even-bigger-s5111.png",
+    "r3/card-even-bigger-s5112.png"
+   ],
+   "note": "更巨大（保留，4 能量，1 张）"
+  },
+  "cards/art/extra-head.png": {
+   "source": "r1/card-extra-head-s5101.png",
+   "candidates": [
+    "r1/card-extra-head-s5102.png",
+    "r1/card-extra-head-s5103.png"
+   ],
+   "note": "额外脑袋（保留，7 能量，2 张）"
+  },
+  "cards/art/fire-breathing.png": {
+   "source": "r3/card-fire-breathing-s5111.png",
+   "candidates": [
+    "r1/card-fire-breathing-s5101.png",
+    "r1/card-fire-breathing-s5102.png",
+    "r1/card-fire-breathing-s5103.png",
+    "r3/card-fire-breathing-s5112.png",
+    "r3/card-fire-breathing-s5113.png"
+   ],
+   "note": "喷火（保留，4 能量，1 张）"
+  },
+  "cards/art/freeze-time.png": {
+   "source": "r1/card-freeze-time-s5102.png",
+   "candidates": [
+    "r1/card-freeze-time-s5101.png",
+    "r1/card-freeze-time-s5103.png"
+   ],
+   "note": "冻结时间（保留，5 能量，1 张）"
+  },
+  "cards/art/friend-of-children.png": {
+   "source": "r1/card-friend-of-children-s5102.png",
+   "candidates": [
+    "r1/card-friend-of-children-s5101.png",
+    "r1/card-friend-of-children-s5103.png"
+   ],
+   "note": "孩子们的朋友（保留，3 能量，1 张）"
+  },
+  "cards/art/giant-brain.png": {
+   "source": "r1/card-giant-brain-s5102.png",
+   "candidates": [
+    "r1/card-giant-brain-s5101.png",
+    "r1/card-giant-brain-s5103.png"
+   ],
+   "note": "巨脑（保留，5 能量，1 张）"
+  },
+  "cards/art/gourmet.png": {
+   "source": "r1/card-gourmet-s5101.png",
+   "candidates": [
+    "r1/card-gourmet-s5102.png",
+    "r1/card-gourmet-s5103.png"
+   ],
+   "note": "美食家（保留，4 能量，1 张）"
+  },
+  "cards/art/herbivore.png": {
+   "source": "r3/card-herbivore-s5112.png",
+   "candidates": [
+    "r1/card-herbivore-s5101.png",
+    "r1/card-herbivore-s5102.png",
+    "r1/card-herbivore-s5103.png",
+    "r3/card-herbivore-s5111.png",
+    "r3/card-herbivore-s5113.png"
+   ],
+   "note": "草食动物（保留，5 能量，1 张）"
+  },
+  "cards/art/herd-culler.png": {
+   "source": "r3/card-herd-culler-s5113.png",
+   "candidates": [
+    "r1/card-herd-culler-s5101.png",
+    "r1/card-herd-culler-s5102.png",
+    "r1/card-herd-culler-s5103.png",
+    "r3/card-herd-culler-s5111.png",
+    "r3/card-herd-culler-s5112.png"
+   ],
+   "note": "剔除弱者（保留，3 能量，1 张）"
+  },
+  "cards/art/it-has-a-child.png": {
+   "source": "r3/card-it-has-a-child-s5112.png",
+   "candidates": [
+    "r1/card-it-has-a-child-s5101.png",
+    "r1/card-it-has-a-child-s5102.png",
+    "r1/card-it-has-a-child-s5103.png",
+    "r3/card-it-has-a-child-s5111.png",
+    "r3/card-it-has-a-child-s5113.png"
+   ],
+   "note": "它有个孩子（保留，7 能量，1 张）"
+  },
+  "cards/art/jets.png": {
+   "source": "r1/card-jets-s5102.png",
+   "candidates": [
+    "r1/card-jets-s5101.png",
+    "r1/card-jets-s5103.png"
+   ],
+   "note": "喷气式（保留，5 能量，1 张）"
+  },
+  "cards/art/made-in-a-lab.png": {
+   "source": "r1/card-made-in-a-lab-s5103.png",
+   "candidates": [
+    "r1/card-made-in-a-lab-s5101.png",
+    "r1/card-made-in-a-lab-s5102.png"
+   ],
+   "note": "实验室出品（保留，2 能量，1 张）"
+  },
+  "cards/art/metamorph.png": {
+   "source": "r1/card-metamorph-s5103.png",
+   "candidates": [
+    "r1/card-metamorph-s5101.png",
+    "r1/card-metamorph-s5102.png",
+    "r3/card-metamorph-s5111.png",
+    "r3/card-metamorph-s5112.png",
+    "r3/card-metamorph-s5113.png"
+   ],
+   "note": "变形（保留，3 能量，1 张）"
+  },
+  "cards/art/mimic.png": {
+   "source": "r1/card-mimic-s5103.png",
+   "candidates": [
+    "r1/card-mimic-s5101.png",
+    "r1/card-mimic-s5102.png"
+   ],
+   "note": "模仿（保留，8 能量，1 张）"
+  },
+  "cards/art/monster-batteries.png": {
+   "source": "r1/card-monster-batteries-s5101.png",
+   "candidates": [
+    "r1/card-monster-batteries-s5102.png",
+    "r1/card-monster-batteries-s5103.png"
+   ],
+   "note": "怪兽电池（保留，2 能量，1 张）"
+  },
+  "cards/art/nova-breath.png": {
+   "source": "r1/card-nova-breath-s5101.png",
+   "candidates": [
+    "r1/card-nova-breath-s5102.png",
+    "r1/card-nova-breath-s5103.png"
+   ],
+   "note": "新星吐息（保留，7 能量，1 张）"
+  },
+  "cards/art/omnivore.png": {
+   "source": "r1/card-omnivore-s5102.png",
+   "candidates": [
+    "r1/card-omnivore-s5101.png",
+    "r1/card-omnivore-s5103.png"
+   ],
+   "note": "杂食动物（保留，4 能量，1 张）"
+  },
+  "cards/art/parasitic-tentacles.png": {
+   "source": "r1/card-parasitic-tentacles-s5102.png",
+   "candidates": [
+    "r1/card-parasitic-tentacles-s5101.png",
+    "r1/card-parasitic-tentacles-s5103.png"
+   ],
+   "note": "寄生触手（保留，4 能量，1 张）"
+  },
+  "cards/art/plot-twist.png": {
+   "source": "r1/card-plot-twist-s5101.png",
+   "candidates": [
+    "r1/card-plot-twist-s5102.png",
+    "r1/card-plot-twist-s5103.png"
+   ],
+   "note": "剧情反转（保留，3 能量，1 张）"
+  },
+  "cards/art/poison-quills.png": {
+   "source": "r1/card-poison-quills-s5102.png",
+   "candidates": [
+    "r1/card-poison-quills-s5101.png",
+    "r1/card-poison-quills-s5103.png"
+   ],
+   "note": "毒刺（保留，3 能量，1 张）"
+  },
+  "cards/art/poison-spit.png": {
+   "source": "r1/card-poison-spit-s5101.png",
+   "candidates": [
+    "r1/card-poison-spit-s5102.png",
+    "r1/card-poison-spit-s5103.png"
+   ],
+   "note": "毒液（保留，4 能量，1 张）"
+  },
+  "cards/art/rapid-healing.png": {
+   "source": "r1/card-rapid-healing-s5103.png",
+   "candidates": [
+    "r1/card-rapid-healing-s5101.png",
+    "r1/card-rapid-healing-s5102.png"
+   ],
+   "note": "快速治疗（保留，3 能量，1 张）"
+  },
+  "cards/art/regeneration.png": {
+   "source": "r1/card-regeneration-s5101.png",
+   "candidates": [
+    "r1/card-regeneration-s5102.png",
+    "r1/card-regeneration-s5103.png"
+   ],
+   "note": "再生（保留，4 能量，1 张）"
+  },
+  "cards/art/rooting-for-the-underdog.png": {
+   "source": "r1/card-rooting-for-the-underdog-s5103.png",
+   "candidates": [
+    "r1/card-rooting-for-the-underdog-s5101.png",
+    "r1/card-rooting-for-the-underdog-s5102.png"
+   ],
+   "note": "为弱者加油（保留，3 能量，1 张）"
+  },
+  "cards/art/shrink-ray.png": {
+   "source": "r1/card-shrink-ray-s5102.png",
+   "candidates": [
+    "r1/card-shrink-ray-s5101.png",
+    "r1/card-shrink-ray-s5103.png"
+   ],
+   "note": "缩小射线（保留，6 能量，1 张）"
+  },
+  "cards/art/smoke-cloud.png": {
+   "source": "r1/card-smoke-cloud-s5102.png",
+   "candidates": [
+    "r1/card-smoke-cloud-s5101.png",
+    "r1/card-smoke-cloud-s5103.png"
+   ],
+   "note": "烟雾（保留，4 能量，1 张）"
+  },
+  "cards/art/solar-powered.png": {
+   "source": "r1/card-solar-powered-s5102.png",
+   "candidates": [
+    "r1/card-solar-powered-s5101.png",
+    "r1/card-solar-powered-s5103.png"
+   ],
+   "note": "太阳能（保留，2 能量，1 张）"
+  },
+  "cards/art/spiked-tail.png": {
+   "source": "r3/card-spiked-tail-s5111.png",
+   "candidates": [
+    "r1/card-spiked-tail-s5101.png",
+    "r1/card-spiked-tail-s5102.png",
+    "r1/card-spiked-tail-s5103.png",
+    "r3/card-spiked-tail-s5112.png",
+    "r3/card-spiked-tail-s5113.png"
+   ],
+   "note": "尖刺尾巴（保留，5 能量，1 张）"
+  },
+  "cards/art/stretchy.png": {
+   "source": "r3/card-stretchy-s5111.png",
+   "candidates": [
+    "r1/card-stretchy-s5101.png",
+    "r1/card-stretchy-s5102.png",
+    "r1/card-stretchy-s5103.png",
+    "r3/card-stretchy-s5112.png",
+    "r3/card-stretchy-s5113.png"
+   ],
+   "note": "弹性（保留，3 能量，1 张）"
+  },
+  "cards/art/telepath.png": {
+   "source": "r1/card-telepath-s5101.png",
+   "candidates": [
+    "r1/card-telepath-s5102.png",
+    "r1/card-telepath-s5103.png"
+   ],
+   "note": "心灵感应（保留，4 能量，1 张）"
+  },
+  "cards/art/urbavore.png": {
+   "source": "r3/card-urbavore-s5112.png",
+   "candidates": [
+    "r1/card-urbavore-s5101.png",
+    "r1/card-urbavore-s5102.png",
+    "r1/card-urbavore-s5103.png",
+    "r3/card-urbavore-s5111.png",
+    "r3/card-urbavore-s5113.png"
+   ],
+   "note": "城市吞噬者（保留，4 能量，1 张）"
+  },
+  "cards/art/were-only-making-it-stronger.png": {
+   "source": "r3/card-were-only-making-it-stronger-s5112.png",
+   "candidates": [
+    "r1/card-were-only-making-it-stronger-s5101.png",
+    "r1/card-were-only-making-it-stronger-s5102.png",
+    "r1/card-were-only-making-it-stronger-s5103.png",
+    "r3/card-were-only-making-it-stronger-s5111.png",
+    "r3/card-were-only-making-it-stronger-s5113.png"
+   ],
+   "note": "越打越强（保留，3 能量，1 张）"
+  },
+  "cards/art/wings.png": {
+   "source": "r1/card-wings-s5103.png",
+   "candidates": [
+    "r1/card-wings-s5101.png",
+    "r1/card-wings-s5102.png"
+   ],
+   "note": "双翼（保留，6 能量，1 张）"
+  },
+  "cards/back.png": {
+   "source": "r1/back-s5202.png",
+   "candidates": [
+    "r1/back-s5203.png",
+    "r1/back-s5201.png"
+   ],
+   "note": ""
+  },
+  "ui/trophy.png": {
+   "source": "r1/trophy-s5301.png",
+   "candidates": [
+    "r1/trophy-s5303.png",
+    "r1/trophy-s5302.png"
+   ],
+   "note": ""
+  }
+ },
+ "anchor": {
+  "heart": [
+   84,
+   68
+  ],
+  "harbor": [
+   84,
+   80
+  ]
+ },
+ "monsters": {
+  "deer": {
+   "name": "团团鹿",
+   "color": "#e8704f"
+  },
+  "jelly": {
+   "name": "啵啵冻",
+   "color": "#a57fdc"
+  },
+  "robot": {
+   "name": "铁罐丁",
+   "color": "#36b9c4"
+  },
+  "cloud": {
+   "name": "轰隆云",
+   "color": "#f2c63a"
+  },
+  "moss": {
+   "name": "苔石墩",
+   "color": "#78c257"
+  },
+  "crab": {
+   "name": "钳钳蟹",
+   "color": "#4a7fe0"
+  }
+ },
+ "covers": {
+  "recommended": "out/covers/cover-night-s5702.png",
+  "candidates": [
+   "out/covers/cover-night-s5702.png",
+   "out/covers/cover-day-s5702.png",
+   "out/covers/cover-s5602.png",
+   "out/covers/cover-s5601.png"
+  ],
+  "size": "384x192"
+ }
+}

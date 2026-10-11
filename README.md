@@ -150,3 +150,21 @@ const next = applyScripted(state, "p2", { type: "ROLL", keep: [2, 3, 4] }, ["cla
 | 基线 B ×3 | 4 | 300 | 55.3%（公平 25%），平均名次 1.60 |
 
 全人机自对弈 2–6 人各 300 局：平均 18.9 / 24.4 / 35.7 / 35.4 / 42.1 回合；20 分获胜 8% / 68% / 81% / 82% / 81%，其余是打翻全场，没有全灭；单步耗时 p50 <0.01ms、p99 0.01ms、最坏 0.73ms。
+
+## 界面
+
+- 牌桌 `apps/web/src/GameBoard.tsx`：左栏玩家面板、中间城心/港湾 + 骰子 + 公开卡、右栏战况和聊天（<1280 收成抽屉，<700 单列）。`layout.ts` 按牌桌中间区域的实测尺寸挑整数倍（卡 > 城心 > 骰子）。卡面 `Card.tsx`：卡底图 + 代码叠费用、卡名、效果文字。
+- 白天版：`day-palette.ts`（靛紫夜色 → 白底，卡面/标签/横幅 keep）+ `src/theme-day.css`。
+- 预览页（开发用，提交进仓库）：`http://localhost:5297/preview.html?s=<场景>`，场景是预览工厂的全部名字，外加 offline / auto / spectate / rematch；`&err=1` 显示错误提示；`&nav` 显示场景切换链接。
+- 截图和实打脚本在 `~/projects/qa-reports/tools/`：`kaiju-room.mjs`（首页、等候房间）、`kaiju-play.mjs`（浏览器打完两局 + 刷新回座）、`tut-kaiju.mjs`（教程走查）。
+
+## 背景音乐 / 声音
+
+- `apps/web/src/gm-sound.tsx` 和其他仓库同一份（不要改）。这款还没有曲子：`useBgm(room || tutorialOpen ? NO_BGM : null)`，♪ 面板照样有音效、语音两条。
+- 动作音效 `apps/web/src/game-sfx.ts`：掷骰、改骰、爪击（招牌）、挨打、挡住、进城（招牌）、让位/留下、买卡、换一批、卖卡、得分、能量、回血、出局、双翼（招牌）、超时、轮到你、终局输赢；跟自己有关的响亮，别人的减半。牌桌最后 5 秒 `useSfxCountdown`。
+- 检查：`NO_MUSIC=1 URL=http://localhost:5297/ node ~/projects/qa-reports/tools/bgm-check.mjs`。
+
+## 新手教程
+
+- 剧本 `packages/game/src/tutorial.ts`（4 人局，22 步，剧本骰子 34 颗），单测 `tutorial.test.ts`；网页 `TutorialMode.tsx`、`tutorialGame.ts`（提示、小贴士），教练层 `apps/web/src/tutorial/`（全站共用，从欲罢不能复制，不改逻辑）。
+- 入口：首页、等候房间的邀请卡；地址带 `?tutorial` 直接打开。练习局和「只有自己 + 人机」的对局里有「提示」（键盘 H）。

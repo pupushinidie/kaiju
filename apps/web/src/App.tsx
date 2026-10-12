@@ -254,6 +254,7 @@ function App() {
   if (tutorialOpen && room?.status !== "playing") {
     return (
       <main data-gc-table className="app-shell kj-game tut-on">
+        <KaijuBackdrop theme={theme} />
         <TutorialMode name={name} brand={<Brand />} themeToggle={themeToggle} waitingRoom={room?.code} onExit={closeTutorial} />
         {confirmDialog}
       </main>
@@ -265,6 +266,7 @@ function App() {
     const watched = players.some((player) => player.id === watchId) ? watchId : players[0]!.id;
     return (
       <main className="app-shell kj-game" data-gc-table>
+        <KaijuBackdrop theme={theme} />
         <GameBoard
           room={room}
           busy={busy}
@@ -290,6 +292,7 @@ function App() {
   if (room) {
     return (
       <main className="app-shell kj-lobby">
+        <KaijuBackdrop theme={theme} />
         <header className="topbar">
           <Brand />
           <div className="topbar-right">
@@ -332,6 +335,7 @@ function App() {
 
   return (
     <main className="app-shell kj-lobby kj-home">
+      <KaijuBackdrop theme={theme} />
       <header className="topbar">
         <Brand />
         <div className="topbar-right">
@@ -461,6 +465,15 @@ function App() {
         </div>
       </section>
     </main>
+  );
+}
+
+function KaijuBackdrop({ theme }: { theme: "day" | "night" }) {
+  return (
+    <div className="kj-backdrop" aria-hidden="true">
+      <div className="kj-backdrop-art" style={{ backgroundImage: `url(${theme === "day" ? bgArt.day : bgArt.night})` }} />
+      <div className="kj-backdrop-veil" />
+    </div>
   );
 }
 

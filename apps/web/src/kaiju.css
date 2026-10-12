@@ -8,6 +8,21 @@
 .kj-screen img, .kj-hero img, .kj-monster-option img, .kj-room-avatar, .kj-brand-icon, .kj-modal img { image-rendering: pixelated; }
 .kj-screen small { font-size: 12px; font-weight: 400; }
 
+/* ---------- 全屏背景 ---------- */
+.kj-backdrop { position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; background: #1b1428; }
+.kj-backdrop-art {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: max(100vw, calc(100vh * 16 / 9));
+  height: max(100vh, calc(100vw * 9 / 16));
+  transform: translate(-50%, -50%);
+  background-size: 100% 100%;
+  image-rendering: pixelated;
+}
+.kj-backdrop-veil { position: absolute; inset: 0; background: #0d0914; opacity: 0.4; }
+.app-shell.kj-lobby > :not(.kj-backdrop):not(.gm-modal-backdrop), .app-shell.kj-game > :not(.kj-backdrop):not(.gm-modal-backdrop) { position: relative; z-index: 1; }
+
 /* ---------- 首页主图、品牌、等候房间 ---------- */
 .app-shell .kj-brand-icon { width: 32px; height: 32px; }
 .app-shell .kj-hero { position: relative; width: 512px; max-width: 100%; height: 288px; margin-top: 22px; overflow: hidden; box-shadow: 0 0 0 var(--px) var(--edge), 0 0 0 calc(var(--px) * 2) var(--rim), 0 0 0 calc(var(--px) * 3) var(--edge); }
@@ -437,7 +452,7 @@
 .app-shell.kj-lobby .topbar .game-rules-panel { position: absolute; z-index: 60; right: 0; top: calc(100% + 8px); width: min(560px, calc(100vw - 24px)); max-height: calc(100dvh - 80px); overflow: auto; display: block; margin: 0; }
 .app-shell.kj-lobby .topbar .game-rules-block + .game-rules-block { margin-top: 12px; }
 .app-shell.kj-home .welcome-grid { grid-template-columns: minmax(0, 1fr) 420px; gap: 40px; padding: 16px 0 0; align-items: start; }
-.app-shell.kj-home .welcome-copy { padding: 0; }
+.app-shell.kj-home .welcome-copy { box-sizing: border-box; padding: 20px 24px; background: var(--panel); box-shadow: 0 calc(var(--px) * -1) 0 0 var(--edge), 0 var(--px) 0 0 var(--edge), calc(var(--px) * -1) 0 0 0 var(--edge), var(--px) 0 0 0 var(--edge), inset var(--px) var(--px) 0 0 var(--rim), inset calc(var(--px) * -1) calc(var(--px) * -1) 0 0 var(--shade); }
 .app-shell.kj-home .welcome-copy h1 { margin: 8px 0 10px; font-size: 48px; }
 .app-shell.kj-home .welcome-description { max-width: 560px; margin: 0; }
 .app-shell.kj-home .kj-hero { margin-top: 14px; }
@@ -450,7 +465,8 @@
 .app-shell.kj-home .online-rooms-heading { margin-bottom: 10px; }
 .kj-room-page { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 20px; align-items: start; padding: 14px 0 18px; }
 .app-shell .kj-room-page .room-layout { width: 100%; padding: 0; }
-.app-shell .kj-room-page .room-heading { margin-bottom: 14px; }
+.app-shell .kj-room-page .room-heading { margin-bottom: 14px; padding: 12px 16px; background: var(--panel); box-shadow: 0 calc(var(--px) * -1) 0 0 var(--edge), 0 var(--px) 0 0 var(--edge), calc(var(--px) * -1) 0 0 0 var(--edge), var(--px) 0 0 0 var(--edge), inset var(--px) var(--px) 0 0 var(--rim), inset calc(var(--px) * -1) calc(var(--px) * -1) 0 0 var(--shade); }
+.app-shell .kj-room-page .room-feedback { width: fit-content; max-width: 100%; margin: 0 0 12px; padding: 4px 12px; background: var(--panel); box-shadow: 0 calc(var(--px) * -1) 0 0 var(--edge), 0 var(--px) 0 0 var(--edge), calc(var(--px) * -1) 0 0 0 var(--edge), var(--px) 0 0 0 var(--edge), inset var(--px) var(--px) 0 0 var(--rim), inset calc(var(--px) * -1) calc(var(--px) * -1) 0 0 var(--shade); }
 .app-shell .kj-room-page .room-heading h1 { margin: 8px 0 4px; font-size: 36px; }
 .app-shell .kj-room-page .room-grid { grid-template-columns: minmax(300px, 0.9fr) minmax(0, 1.1fr); gap: 16px; }
 .app-shell .kj-room-page .room-panel { padding: 16px; }

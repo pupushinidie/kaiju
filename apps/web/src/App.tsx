@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState, type CSSProperties, type FormEvent } from "react";
 import { CAPACITY_OPTIONS, MONSTER_IDS, type Capacity, type GameCommand, type LobbyRoomSnapshot, type MonsterId, type PublicRoomSummary } from "@kaiju/game";
 import { bgArt, boardArt, MONSTERS, monsterArt } from "./art.js";
-import { NO_BGM, sfx, SoundToggle, useBgm, useRoomSfx } from "./gm-sound.js";
+import { type BgmTrack, sfx, SoundToggle, useBgm, useRoomSfx } from "./gm-sound.js";
 import { useConfirm } from "./confirm.js";
 import GameBoard from "./GameBoard.js";
 import GameRules from "./GameRules.js";
@@ -27,6 +27,9 @@ function normalizeRoomCode(value: string): string {
   return value.toUpperCase().replace(/[^A-HJ-NP-Z2-9]/g, "").slice(0, 6);
 }
 
+// 背景音乐：进了房间（等候房间、对局、观战）和新手教程里放，首页和房间列表不放。gain / start / end 按这首曲子量（见 gm-sound.tsx）。
+const BGM: BgmTrack = { src: `${import.meta.env.BASE_URL}bgm/kaiju.mp3`, gain: 0.8, start: 0.0, end: 117.5 };
+
 function App() {
   const [mode, setMode] = useState<EntryMode>("create");
   const [name, setName] = useState("");
@@ -48,7 +51,7 @@ function App() {
   // 新手教程：首页或等候房间点进来（地址带 ?tutorial 时直接打开，游戏中心可以直接链过来）
   const [tutorialOpen, setTutorialOpen] = useState(() => new URLSearchParams(window.location.search).has("tutorial"));
   // 这款还没有背景音乐曲子：房间和教程里照样显示 ♪ 面板（音效、语音）
-  useBgm(room || tutorialOpen ? NO_BGM : null);
+  useBgm(room || tutorialOpen ? BGM : null);
   const chatSeen = useRef({ count: 0 });
   const lastChat = room?.chat.at(-1);
   if (room) chatSeen.current.count = room.chat.length;
